@@ -5,4 +5,8 @@ owner:
   hid: sp19-222-99
   community: e222
   semester: sp19
-  
+project:
+  - title: "Classification of Soccer Positions with Game data"
+    url: "https://github.com/cloudmesh-community/sp19-222-92/blob/master/project-report/report.md"
+    code: "https://github.com/cloudmesh-community/sp19-222-92/tree/master/project-code"
+    keywords: "Soccer"  
