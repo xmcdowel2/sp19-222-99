@@ -1,0 +1,112 @@
+swagger: "2.0"
+info: 
+  version: "0.0.1"
+  title: "Clustering Athlete Data"
+  description: "A simple service that gets game data from a cloud storage service to show atheletic performance"
+  termsOfService: "http://swagger.io/terms/"
+  contact: 
+    name: "Cloudmesh REST Service with AI"
+  license: 
+    name: "Xandria McDowell, Ben Yeagley, and Jesus Badillo"
+host: "localhost:8080"
+basePath: "/project19"
+schemes: 
+  - "http"
+consumes: 
+  - "application/json"
+produces: 
+  - "application/json"
+paths: 
+  /data/output/<output>:
+    get:
+      tags:
+        - DATA
+      operationId: functions.download
+      description: "Downloads data from url"
+      produces: 
+        - "application/json"
+      responses: 
+        "200":
+          description: "Data info"
+          schema: {}
+
+
+  /data/download/<filename>/:
+    get:
+      tags:
+        - GETUSERINFO
+      operationId: functions.get_url
+      description: "Getting the user data"
+      produces:
+        - "application/png"
+      responses:
+        "200":
+          description: "plot the user against the women soccer players at IUB"
+          schema: {}
+
+
+  /selection/<filename>/player_selection/<player_selection>:
+    get:
+      tags:
+        - PARTITION
+      operationId: functions.data_seperation
+      description: "Split up data"
+      produces: 
+        - "application/json"
+      responses: 
+        "200":
+          description: "Getting the data set into the correct form "
+          schema: {}
+
+  /data/normalize/norm/<filename>:
+    get:
+      tags:
+        - NORMALIZE 
+      operationId: functions.normalize
+      description: "normalizing data"
+      produces: 
+        - "application/png"
+      responses: 
+        "200":
+          description: "normalize the data"
+          schema: {}
+
+  /data/shuffle/<filename>:
+    get:
+      tags:
+        - SHUFFLE
+      operationId: functions.shuffle_dimension
+      description: "shuffling data"
+      produces: 
+        - "application/png"
+      responses: 
+        "200":
+          description: "shuffle the dataset"
+          schema: {}
+
+  /experiment/kmeansplot/<filename>:
+    get:
+      tags:
+        - KMEANS
+      operationId: functions.kmeans_cluster
+      description: "KMeans on the womens soccer data set"
+      produces: 
+        - "application/json"
+      responses: 
+        "200":
+          description: "perform KMeans"
+          schema: {}
+
+          #  /experiment/kmeans/user/plot/<filename>:
+          # get:
+          # tags:
+          # - PLOT
+          #operationId: functions.user_kmeans
+          #description: "Ploting use data aginst the soccers plays at Indiana University Bloomington(IUB)"
+          #produces: 
+          # - "application/png"
+          #responses: 
+          #"200":
+          #description: "plot the user against the women soccer players at IUB"
+          #schema: {}
+
