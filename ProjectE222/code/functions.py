@@ -46,7 +46,6 @@ def new_download(filename):
     get_url()
     r = requests.get(url, allow_redirects=True)
     open(filename, 'wb').write(r.content)
-    return
 
 def download(output):
     output_file = '/data/'+ output
