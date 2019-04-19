@@ -2,7 +2,7 @@ from flask import jsonify
 import connexion
 import os
 from pathlib import Path
-from YAML import specification_dir
+from yml import specification_dir
 
 print(specification_dir)
 
