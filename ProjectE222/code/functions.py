@@ -26,7 +26,7 @@ from sklearn.decomposition import PCA
 
 # Used for spectral clustering
 from sklearn.cluster import SpectralClustering
-url = test
+url = 'test'
 
 print(__doc__)
 
