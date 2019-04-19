@@ -30,7 +30,6 @@ paths:
           description: "Data info"
           schema: {}
 
-
   /data/download/<filename>/:
     get:
       tags:
@@ -43,7 +42,6 @@ paths:
         "200":
           description: "plot the user against the women soccer players at IUB"
           schema: {}
-
 
   /selection/<filename>/player_selection/<player_selection>:
     get:
