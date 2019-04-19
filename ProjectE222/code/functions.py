@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import csv
 import random
+import requests
 import matplotlib
 matplotlib.use('TkAgg')               #I added this line
 from sklearn.cluster import KMeans
