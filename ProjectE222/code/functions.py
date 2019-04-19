@@ -43,12 +43,12 @@ def download_data(url, filename):
     return
 
 def new_download(filename):
-    get_url()
+    url = get_url()
     r = requests.get(url, allow_redirects=True)
     open(filename, 'wb').write(r.content)
 
 def download(output):
-    output_file = '/data/'+ output
+    output_file = 'data/'+ output
     new_download(filename=output_file)
     return (str(output) + "Downloaded")
 
