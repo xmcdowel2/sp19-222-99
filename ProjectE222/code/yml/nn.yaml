@@ -30,24 +30,24 @@ paths:
           description: "Data info"
           schema: {}
 
-  /data/download/<filename>/:
-    get:
-      tags:
-        - GETUSERINFO
-      operationId: functions.get_url
-      description: "Getting the user data"
-      produces:
-        - "application/png"
-      responses:
-        "200":
-          description: "plot the user against the women soccer players at IUB"
-          schema: {}
+          # /data/download/<filename>/:
+          # get:
+          #tags:
+          # - GETUSERINFO
+          # operationId: functions.get_url
+          #description: "Getting the user data"
+          # produces:
+          # - "application/png"
+          #responses:
+          #"200":
+          # description: "plot the user against the women soccer players at IUB"
+          # schema: {}
 
-  /selection/<filename>/player_selection/<player_selection>:
+  /IU_WOMENS_SOCCER/plot/<csv>:
     get:
       tags:
         - PARTITION
-      operationId: functions.data_seperation
+      operationId: functions.separate_normalize
       description: "Split up data"
       produces: 
         - "application/json"

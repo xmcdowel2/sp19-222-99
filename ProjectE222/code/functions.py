@@ -52,7 +52,15 @@ def download(output):
     new_download(filename=output_file)
     return (str(output) + "Downloaded")
 
-def data_seperation(datafile):
+def separate_normalize(csv):
+    path = 'data/'+csv
+    df, labels = data_separation(path)
+    norm, csv_ret = normalize(df)
+    arr, m = shuffle_dimension(norm, labels)
+    create_scatter(arr, m, labels)
+    return()
+
+def data_separation(datafile):
     #datafile = "total_game_data2.csv"
 
     df = pd.read_csv(datafile)
@@ -132,7 +140,7 @@ def normalize(df):
     # Save changes in new csv to view later
     csv_ret = "altered_total.csv"
     df.to_csv(csv_ret)
-
+    print("done normalizing\n")
     return(df, csv_ret)
 
 def shuffle_dimension(df, labels):
@@ -152,6 +160,7 @@ def shuffle_dimension(df, labels):
     # Store dimensions of dataframe and convert to an array
     [m,n] = finalDf.shape
     df_array = finalDf.values
+    print("done dimensions")
     return(df_array, m)
 
 def shape_assign(labels):
@@ -186,6 +195,7 @@ def kmeans_cluster(df_array, m, labels):
     X = np.zeros((m,2))
     X[:,0] = df_array[:,ind1]
     X[:,1] = df_array[:,ind2]
+    print("done X np.zeros\n")
 
  #   plt.scatter( X[:,0],X[:,1], alpha=0.25, cmap = 4 )
   #  plt.show()
@@ -204,7 +214,7 @@ def kmeans_cluster(df_array, m, labels):
     labels = kmeans.predict(X)
  #   plt.scatter( X[:,0],X[:,1], c=kmeans.labels_, alpha=0.75 )
   #  plt.show()
-
+    print("kmeans done\n");
     x = X[:,0]
     y = X[:,1]
 
@@ -213,12 +223,15 @@ def kmeans_cluster(df_array, m, labels):
     col = assign_color(kmeans.labels_)
     for i in range(len(X)):
         plt.scatter(x[i], y[i], c=col[i], marker=markers[i], alpha =0.5)
+    print("done plots\n")
 
     bytes_image = io.BytesIO()
     plt.savefig(bytes_image, format='png')
     bytes_image.seek(0)
     #plt.show()
-    return( send_file(bytes_image, attachment_filename = 'plot.png', mimetype= 'image/png'))
+
+   # return( send_file(bytes_image, attachment_filename = 'plot.png', mimetype= 'image/png'))
+    return(bytes_image)
 
 def user_data(sprints, DSP2, DSP3, DSP5, ACC1, ACC2, ACC3, ACC4):
         
@@ -301,3 +314,9 @@ def generate_figure(filename):
         plt.savefig(bytes_image, format='png')
         bytes_image.seek(0)
     return bytes_image
+
+
+def create_scatter(df_arr, m, labels):
+    bytes_plot = kmeans_cluster(df_arr, m, labels)
+    print("in scatter\n")
+    return(send_file(bytes_plot, attachment_filename = 'plot.png'))
