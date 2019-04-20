@@ -138,7 +138,7 @@ def normalize(df):
     df = pd.DataFrame(x_scaled)
 
     # Save changes in new csv to view later
-    csv_ret = "altered_total.csv"
+    csv_ret = "data/altered_total.csv"
     df.to_csv(csv_ret)
     print("done normalizing\n")
     return(df, csv_ret)
@@ -319,4 +319,4 @@ def generate_figure(filename):
 def create_scatter(df_arr, m, labels):
     bytes_plot = kmeans_cluster(df_arr, m, labels)
     print("in scatter\n")
-    return(send_file(bytes_plot, attachment_filename = 'plot.png'))
+    return(send_file(bytes_plot, attachment_filename = 'plot.png', mimetype = 'image/png'))
