@@ -42,8 +42,34 @@ paths:
           #"200":
           # description: "plot the user against the women soccer players at IUB"
           # schema: {}
+  /separate/data/<datafile>:
+    get:
+      tags:
+        - SEPARATION
+      operationId: functions.data_separation
+      description: "separates the data"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Data info"
+          schema: {}
 
-  /womens/plot/<csv>:
+  /normalize/data/<datafile>:
+     get:
+      tags:
+        - NORMALIZE
+      operationId: functions.normalize
+      description: "normalize the data"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+           description: "Data info"
+           schema: {}
+          
+
+  /IU_WOMENS_SOCCER/plot/<csv>:
     get:
       tags:
         - PARTITION
@@ -56,24 +82,24 @@ paths:
           description: "Getting the data set into the correct form "
           schema: {}
 
-  /data/normalize/norm/<filename>:
-    get:
-      tags:
-        - NORMALIZE 
-      operationId: functions.normalize
-      description: "normalizing data"
-      produces: 
-        - "application/png"
-      responses: 
-        "200":
-          description: "normalize the data"
-          schema: {}
+          #  /data/normalize/norm/<filename>:
+          # get:
+          # tags:
+          # - NORMALIZE 
+          # operationId: functions.normalize
+          #description: "normalizing data"
+          #produces: 
+          # - "application/png"
+          #responses: 
+          #"200":
+          # description: "normalize the data"
+          # schema: {}
 
-  /data/shuffle/<filename>:
+  /shuffle/data/<altered_csv>/<labels>:
     get:
       tags:
         - SHUFFLE
-      operationId: functions.shuffle_dimension
+      operationId: functions.shuffle_plot
       description: "shuffling data"
       produces: 
         - "application/png"

@@ -30,7 +30,7 @@ from sklearn.cluster import SpectralClustering
 print(__doc__)
 
 def get_url():
-    input_path = 'input.txt'
+    input_path = 'textfiles/input.txt'
     input_file = open(input_path, "rt")
     contents = input_file.read()
     url = contents.rstrip()
@@ -60,11 +60,20 @@ def separate_normalize(csv):
     create_scatter(arr, m, labels)
     return()
 
+def shuffle_plot(altered_csv, labels):
+    
+    print("done")
+    labelpath = 'data/'+labels
+    csv_class = pd.read_csv(labelpath)
+    df_array, m = shuffle_dimension(altered_csv, labels)
+    kmeans_cluster(df_array, m, csv_class)
+    return()
+
 def data_separation(datafile):
     #datafile = "total_game_data2.csv"
-
-    df = pd.read_csv(datafile)
-
+    path = 'data/'+datafile
+    df = pd.read_csv(path)
+    print("df ran")
     # Removes every row where a player had zero minutes played
     df = df[df['Min Played'] != 0]
 
@@ -79,8 +88,13 @@ def data_separation(datafile):
     #Reset index for df, store labels, then remove label column
     df = df.reset_index(drop=True)
     labels = df['Class']
-    df = df[df.columns.drop(list(df.filter(regex='Class')))]
 
+    #Move labels to a csv called class.csv then drop the Class column
+    csv_labels = 'data/class.csv'
+    labels.to_csv(csv_labels, index = True)
+
+    df = df[df.columns.drop(list(df.filter(regex='Class')))]
+    print("labels")
     # Column names to use in later loop
     distance_columns = ('Distance in Speed zone 2 [yd] (0.10 - 2.59 mph)', 'Distance in Speed zone 3 [yd] (2.60 - 5.13 mph)', 'Distance in Speed zone 4 [yd] (5.14 - 8.38 mph)', 'Distance in Speed zone 5 [yd] (8.39- mph)')
     accel_columns = ('Number of accelerations (-50.00 - -3.00 m/s)', 'Number of accelerations (-2.99 - -2.00 m/s)', 'Number of accelerations (-1.99 - -1.00 m/s)', 'Number of accelerations (-0.99 - -0.50 m/s)', 'Number of accelerations (0.50 - 0.99 m/s)', 'Number of accelerations (1.00 - 1.99 m/s)', 'Number of accelerations (2.00 - 2.99 m/s)', 'Number of accelerations (3.00 - 50.00 m/s)')
@@ -126,12 +140,20 @@ def data_separation(datafile):
     df = df[df.columns.drop(list(df.filter(regex='1.00 - 1.99')))]
     df = df[df.columns.drop(list(df.filter(regex='-2.99 - -2.00')))]
 
+    print("done")
+    #Move refined dataset to a csv called altered_total.csv
 
-    return(df, labels)
+    csv_ret = 'data/altered_total.csv'
+    df.to_csv(csv_ret)
 
-def normalize(df):
+    return(csv_ret)
+
+def normalize(datafile):
     # Normalize
 
+    #Read in altered_total.csv dataset
+    path = 'data/'+datafile
+    df = pd.read_csv(path)
     x = df.values
     min_max_scaler = preprocessing.MinMaxScaler()
     x_scaled = min_max_scaler.fit_transform(x)
@@ -141,9 +163,19 @@ def normalize(df):
     csv_ret = "data/altered_total.csv"
     df.to_csv(csv_ret)
     print("done normalizing\n")
-    return(df, csv_ret)
+    return(csv_ret)
 
-def shuffle_dimension(df, labels):
+def shuffle_dimension(altered_csv, labels):
+    print("in alter")
+
+    #Read in altered csv
+    csv_class = pd.read_csv('data/'+labels)
+
+    print(csv_class)
+
+    df = pd.read_csv('data/'+altered_csv)
+    print("done reading")
+
     [m,n] = df.shape
     #for i in range(n):
     #random.shuffle(df[i])
@@ -155,7 +187,7 @@ def shuffle_dimension(df, labels):
     principalDf = pd.DataFrame(data = principalComponents, columns = ['principal component 1', 'principal component 2'])
 
     # Add the labels back to the df
-    finalDf = pd.concat([principalDf, labels], axis = 1)
+    finalDf = pd.concat([principalDf, csv_class], axis = 1)
 
     # Store dimensions of dataframe and convert to an array
     [m,n] = finalDf.shape
@@ -164,7 +196,10 @@ def shuffle_dimension(df, labels):
     return(df_array, m)
 
 def shape_assign(labels):
+    #csv_class = pd.read_csv('data/'+labels)
     shape_labels = []
+    print("in shape_assign")
+    print(labels)
     for i in labels:
         if(i == 'Forward'):
             shape_labels.append('x')
@@ -175,6 +210,7 @@ def shape_assign(labels):
     return(shape_labels)
 
 def assign_color(labels):
+    #csv_class = pd.read_csv('data/'+labels)
     colors = []
     for i in labels:
         if i == 0:
@@ -186,8 +222,9 @@ def assign_color(labels):
     return(colors)
 
 def kmeans_cluster(df_array, m, labels):
-
-    markers = shape_assign(labels)
+    
+    csv_class = pd.read_csv('data/'+labels)
+    markers = shape_assign(csv_class)
 
     # Columns to be used for clustering
     ind1 = 0; ind2 = 1
@@ -211,7 +248,7 @@ def kmeans_cluster(df_array, m, labels):
     # plot the results!
 
     kmeans = KMeans(n_clusters = 3).fit(X)
-    labels = kmeans.predict(X)
+    label = kmeans.predict(X)
  #   plt.scatter( X[:,0],X[:,1], c=kmeans.labels_, alpha=0.75 )
   #  plt.show()
     print("kmeans done\n");
@@ -221,8 +258,16 @@ def kmeans_cluster(df_array, m, labels):
     centroids = kmeans.cluster_centers_
 
     col = assign_color(kmeans.labels_)
-    for i in range(len(X)):
+    print(X)
+    print("x_done")
+    print(markers)
+    print("markers done")
+    print(col)
+    print("colors done")
+    print(kmeans.labels_)
+    for i in range( len(X) ):
         plt.scatter(x[i], y[i], c=col[i], marker=markers[i], alpha =0.5)
+        print(X[i])
     print("done plots\n")
 
     bytes_image = io.BytesIO()
@@ -251,7 +296,7 @@ def user_data(sprints, DSP2, DSP3, DSP5, ACC1, ACC2, ACC3, ACC4):
         #norm1 = [place, norm[0], norm[1], norm[2], norm[3], norm[4], norm[5], norm[6], norm[7]]
        
         total_csv = open('total_game_data2.csv', 'r')
-        output = open('user_total.csv', 'w')
+        output = opben('user_total.csv', 'w')
 
         writer = csv.writer(output)
 
