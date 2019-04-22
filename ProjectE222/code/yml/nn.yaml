@@ -43,7 +43,7 @@ paths:
           # description: "plot the user against the women soccer players at IUB"
           # schema: {}
 
-  /IU_WOMENS_SOCCER/plot/<csv>:
+  /womens/plot/<csv>:
     get:
       tags:
         - PARTITION
