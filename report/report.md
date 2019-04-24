@@ -10,7 +10,7 @@ Can data gathered from athletic practices and games be used to create benchmarks
 
 # Algorithm:
 
-#
+# x
 
 K-Means is an unsupervised machine learning algorithm that takes an unlabeled dataset and finds groups within data without defined categories. The idea is to look at the average or mean values that can be clustered and how many groups of k that are related in some way. When using this algorithm, the hope is that the results can explain why common parameter values are in the same group. This algorithm takes numerical values that describe a coordinated value within a data set. For example, K-Means is beneficial for this project because is able to focus on a particular data set for the women&#39;s soccer team at Indiana University-Bloomington and compare that to users data. For the coordinates, K-Means can represent and describe many different things such as elections, medical test, sports teams, or wine data. Typical you use K-means on a dataset to get the model of the data, this is used to see the behaviors and analyze the patterns the data set. When using clustering methods variance becomes an important topic trying to understand the math behind this algorithm. Variance is a measurement of how far data values are from the mean. By look at the variance equation, it shows that it is a measure of the square difference between the data points and the mean value and then the average. When using the K-means algorithm one of the key points is to measure the closeness of the data to its average which led into cluster variance which divides the data into clusters, each will have its own average.
 
