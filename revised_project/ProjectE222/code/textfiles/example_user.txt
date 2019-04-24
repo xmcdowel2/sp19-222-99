@@ -1,0 +1,11 @@
+1
+2
+3
+4
+5
+6
+7
+8
+
+Only enter "8" values into user.txt when running the user_plot endpoint.
+Also make sure that you have ran the download endpoint before you try running the user_plot end point and kmeans_plot endpoint, or else you will get errors because there will be no dataset to compute from.

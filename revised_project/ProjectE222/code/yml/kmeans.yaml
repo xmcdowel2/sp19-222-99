@@ -1,0 +1,59 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: "Clustering Athlete Data"
+  description: "A simple service that gets game data from a cloud storage service to show athletic performance"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: "Cloudmesh REST Service with AI"
+  license:
+    name: "Xandria McDowell, Ben Yeagley, and Jesus Badillo"
+
+host: "localhost:8080"
+basePath: "/project19"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  
+  /data/output/<output>:
+    get:
+      tags:
+        - DATA
+      operationId: functions.download
+      description: "Downloads the dataset from the URL"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Data info"
+          schema: {}
+  
+  /data/kmeans/<datafile>:
+    get:
+      tags:
+        - KMEANS_PLOT
+      operationId: functions.kmeans_plot
+      description: "Filter the dataset, normalize, and perform Kmeans"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Data info"
+          schema: {}
+  /data/user/<datafile>:
+    get:
+      tags:
+        - USER_DATA
+      operationId: functions.user_plot
+      description: "user data"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Data info"
+          schema: {}
+
